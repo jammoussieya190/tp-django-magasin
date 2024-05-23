@@ -1,0 +1,55 @@
+{% extends "magasin/base.html" %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <br> <br> <a href="{% url 'magasin:create_post' %}" class="btn btn-success">Créer une nouvelle publication</a>
+    <a href="{% url 'magasin:ajouter_commentaire' %}" class="btn btn-success">Créer de nouveaux commentaires</a>
+    <div>
+        <div class="card-group">
+            {% for Produit in list %}
+                {% if forloop.counter0|divisibleby:3 and not forloop.first %}
+                    </div><div class="card-group">
+                {% endif %}
+                <div class="card">
+                    <img src="{{ Produit.img.url }}" class="card-img-top" alt="Card image cap" style="width: 223.5px; height: 223.5px;">
+                
+                    <div class="card-body">
+                        <!-- Use CSS to make the text bold -->
+                        <h5 class="card-title" style="font-weight: bold;">{{ Produit.libelle }}</h5>
+                        <ul class="list-group list-group-flush">
+                            <!-- Use CSS to make the text bold -->
+                            <li class="list-group-item" style="font-weight: bold;">{{ Produit.prix }} DT.</li>
+                        </ul>
+                      
+                    </div>
+                </div>
+                
+            {% endfor %}
+        </div>
+    </div>
+    
+</div>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Contact</h5>
+                <p>Adresse : sfax</p>
+                <p>Téléphone : +216 27439190</p>
+                <p>Email : jammoussieya473@gmail.com</p>
+            </div>
+            <div class="col-md-6">
+                
+               
+                
+            </div>
+        </div>
+        <hr>
+        <div class="text-muted">
+            © 2024 eya jammoussi . Tous droits réservés.
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

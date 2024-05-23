@@ -1,0 +1,28 @@
+{% extends 'magasin/base.html' %}
+
+{% block title %}Ajouter un fournisseur{% endblock title %}
+
+{% block content %}
+<section class="h-100 h-custom" style="background-color: 	#00BFFF;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="p-5">
+                            <h1 class="fw-bold mb-4">Ajouter un fournisseur</h1>
+                            <hr class="my-4">
+
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-primary btn-lg">Ajouter le fournisseur</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

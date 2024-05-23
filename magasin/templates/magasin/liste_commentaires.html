@@ -1,0 +1,37 @@
+{% extends 'magasin/base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Liste des commentaires</h1>
+    
+    <!-- Table to display comments -->
+    {% if commentaires %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Auteur</th>
+                    <th>Contenu</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through comments -->
+                {% for commentaire in commentaires %}
+                    <tr>
+                        <td>{{ commentaire.auteur }}</td>
+                        <td>{{ commentaire.contenu }}</td>
+                        <td>
+                            <!-- Form to delete comment -->
+                            <form method="post" action="{% url 'magasin:supprimer_commentaire' commentaire.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun commentaire pour le moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

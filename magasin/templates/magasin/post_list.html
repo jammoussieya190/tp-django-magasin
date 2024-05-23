@@ -1,0 +1,55 @@
+{% extends 'magasin/base.html' %}
+
+{% block content %}
+<style>
+    .post-image-small {
+        max-width: 100px; /* Vous pouvez ajuster cette valeur selon vos préférences */
+        max-height: 100px; /* Vous pouvez ajuster cette valeur selon vos préférences */
+    }
+</style>
+
+<div class="container">
+    <h1>Post List</h1>
+    <a href="{% url 'magasin:create_post' %}" class="btn btn-success">Create New Post</a>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Content</th>
+                <th scope="col">Image</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ post.title }}</td>
+                <td>{{ post.content }}</td>
+                <td>
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post Image" class="post-image-small" >
+                    {% else %}
+                    No Image
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'magasin:post_detail' pk=post.pk %}" class="btn btn-info">Read More</a>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'magasin:update_post' pk=post.pk %}" class="btn btn-warning">Edit</a>
+                    <form action="{% url 'magasin:delete_post' pk=post.pk %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+   
+    
+</div>
+{% endblock %}

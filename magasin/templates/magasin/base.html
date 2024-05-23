@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+   
+    {% block styles %} {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light " style="text-align:center;">
+        <a class="navbar-brand" href="#"> Shopping </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'magasin:index' %}">Catalogue</a>
+                </li>
+                
+               
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'magasin:post_list' %}">Publication</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'magasin:creer_commande' %}">Commande </a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'magasin:fournisseur' %}">Fournisseur</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'magasin:mesProduits' %}">Produit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'magasin:my_orders' %}">Ordres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'magasin:liste_commentaires' %}">Commentaires</a>
+                </li>
+               
+                {% endif %}
+            
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">{{ user.username }},</a>
+                </li>
+                <li class="nav-item active">
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link">Déconnexion</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'register' %}">Inscription</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav> 
+    {% block content %} {% endblock %}
+</body>
+</html>

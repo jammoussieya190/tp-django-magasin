@@ -1,0 +1,46 @@
+{% extends 'magasin/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Formulaire de commande</h1>
+    <form method="post" id="commande-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_user">Utilisateur :</label>
+            {{ form.user }}
+        </div>
+        <div class="form-group">
+            <label for="id_dateCde">Date de commande :</label>
+            {{ form.dateCde }}
+        </div>
+        <div class="form-group">
+            <label for="id_totalCde">Total de la commande :</label>
+            <input type="text" id="id_totalCde" name="totalCde" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="id_produits">Produits :</label>
+            <select id="id_produits" name="produits" class="form-control" multiple>
+                {% for produit in form.produits.field.queryset %}
+                    <option value="{{ produit.pk }}" data-prix="{{ produit.prix }}">{{ produit }} - {{ produit.prix }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const produitsSelect = document.getElementById('id_produits');
+        const totalCdeInput = document.getElementById('id_totalCde');
+    
+        // Écouter les changements dans la sélection de produits
+        produitsSelect.addEventListener('change', function() {
+            let total = 0;
+            const selectedProduits = Array.from(produitsSelect.selectedOptions).map(option => parseFloat(option.getAttribute('data-prix')));
+            total = selectedProduits.reduce((acc, prix) => acc + prix, 0);
+            totalCdeInput.value = total.toFixed(3);
+        });
+    });
+    </script>
+    
+{% endblock %}

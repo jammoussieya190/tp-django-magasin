@@ -1,0 +1,60 @@
+{% extends 'magasin/base.html' %}
+{% block content %}
+
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  
+    <style media="screen">
+      a:link {
+        text-decoration: none;
+      }
+  
+      h6 {
+        text-align: center;
+      }
+  
+      .row {
+        margin: 100px;
+      }
+    </style>
+  </head>
+ 
+<div class="container">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h6 class="panel-title">Liste des Fournisseurs</h6>
+        </div>
+        <div class="text-right">
+            <a href="{% url 'magasin:add_fournisseur' %}" class="btn btn-primary">Créer un fournisseur</a>
+        </div>
+        <table class="table table-hover table-bordered" id="dev-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Actions</th> <!-- Nouvelle colonne pour les actions -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for fournisseur in fournisseurs %}
+                <tr>
+                    <td>{{ fournisseur.nom }}</td>
+                    <td>{{ fournisseur.telephone }}</td>
+                    <td>{{ fournisseur.adresse }}</td>
+                    <td>{{ fournisseur.email }}</td>
+                    <td>
+                        <a href="{% url 'magasin:edit_fournisseur' fournisseur.id %}" class="btn btn-info btn-sm">Éditer</a>
+                        <a href="{% url 'magasin:delete_fournisseur' fournisseur.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

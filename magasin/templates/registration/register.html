@@ -1,0 +1,42 @@
+{% extends "magasin/base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">{{ block.super }}</div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                {% for field in form %}
+                                    <label for="{{ field.id_for_label }}" class="col-md-4 col-form-label">{{ field.label_tag }}</label>
+                                    <div class="col-md-8">
+                                        {{ field }}
+                                        {% for error in field.errors %}
+                                            <span class="text-danger">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-8 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">s'inscrire</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <small>
+                                    Déjà inscrit.e?
+                                    <a href="{% url 'login' %}" class="btn btn-link">Se connecter</a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

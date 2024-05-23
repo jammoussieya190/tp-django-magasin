@@ -1,0 +1,29 @@
+{% extends 'magasin/base.html' %}
+
+{% block content %}
+<style>
+    .card {
+        max-width: 400px; /* Vous pouvez ajuster cette valeur selon vos préférences */
+    }
+    .post-image-small {
+        max-width: 100px; /* Vous pouvez ajuster cette valeur selon vos préférences */
+        max-height: 100px; /* Vous pouvez ajuster cette valeur selon vos préférences */
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">{{ post.title }}</h1>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text"><strong>Author:</strong> {{ post.author }}</p>
+            <p class="card-text"><strong>Created On:</strong> {{ post.created_on }}</p>
+            <p class="card-text"><strong>Updated On:</strong> {{ post.updated_on }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ post.get_status_display }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Post Image" class="post-image-small">
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

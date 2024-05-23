@@ -1,0 +1,49 @@
+<!-- magasin/my_orders.html -->
+{% extends 'magasin/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h6 class="panel-title">Liste des commandes</h6>
+        </div>
+        <table class="table table-hover table-bordered" id="dev-table">
+            <thead>
+                <tr>
+                    <th>Order Date</th>
+                    <th>Total</th>
+                    <th>Products</th>
+                    <th>Actions</th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.dateCde }}</td>
+                    <td>{{ order.totalCde }}</td>
+                    <td>
+                        <ul>
+                            {% for product in order.produits.all %}
+                            <li>{{ product }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                       
+                        <form action="{% url 'magasin:generate_pdf' order.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Imprimer PDF</button>
+                        </form>
+                       
+                        <form action="{% url 'magasin:delete_order' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

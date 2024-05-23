@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <style>
+        /* Add your custom CSS styles here */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            margin-bottom: 10px;
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .body {
+            padding: 10px;
+        }
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container blog-page">
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>{{ post.title }}</h2>
+                    </div>
+                    <div class="body">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="Post Image" style="width:50%; border-radius: 10px;">
+                        {% endif %}
+                        <p>{{ post.content }}</p>
+                        <a href="{% url 'magasin:post_detail' pk=post.pk %}" class="btn btn-info">Read More</a>
+                        <a href="{% url 'magasin:update_post' pk=post.pk %}" class="btn btn-warning">Edit</a>
+                        <form action="{% url 'magasin:delete_post' pk=post.pk %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{% url 'magasin:create_post' %}" class="btn btn-success">Create New Post</a>
+</body>
+</html>
